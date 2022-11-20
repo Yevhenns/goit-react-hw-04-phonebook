@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form } from './Form/Form';
 import { Contacts } from './Contacts/Contacts';
 import { Filter } from './Filter/Filter';
@@ -6,11 +6,9 @@ import { nanoid } from 'nanoid';
 
 import css from './App.module.css';
 
-export class App extends Component {
-  state = {
-    contacts: [],
-    filter: '',
-  };
+export const App = () => {
+  const [contacts, setContacts] = useState([])
+  const [filter, setFilter] = useState('')
 
   componentDidUpdate(prevState) {
     if (this.state.contacts !== prevState.contacts) {
@@ -55,8 +53,7 @@ export class App extends Component {
     }));
   };
 
-  render() {
-    return (
+  return (
       <div className={css.container}>
         <h1>Phonebook</h1>
         <Form onSubmit={this.formSubmitHandler} />
@@ -67,6 +64,7 @@ export class App extends Component {
           deleteContact={this.deleteContact}
         />
       </div>
-    );
+  );
   }
-}
+
+
