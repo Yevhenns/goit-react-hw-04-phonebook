@@ -10,6 +10,12 @@ export const App = () => {
   const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState('');
 
+  useEffect(() => {
+    if (contacts) {
+      window.localStorage.setItem('contacts', JSON.stringify(contacts));
+    }
+  }, [contacts]);
+
   const formSubmitHandler = (name, number) => {
     const newUser = { id: nanoid(), name, number };
 
@@ -32,19 +38,6 @@ export const App = () => {
       contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
     );
   };
-
-  // componentDidUpdate(prevState) {
-  //   if (this.state.contacts !== prevState.contacts) {
-  //     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-  //   }
-  // }
-  // componentDidMount() {
-  //   const contactsData = localStorage.getItem('contacts');
-  //   const parsedContacts = JSON.parse(contactsData);
-  //   if (parsedContacts) {
-  //     this.setState({ contacts: parsedContacts });
-  //   }
-  // }
 
   const deleteContact = id => {
     this.setState(prevState => ({
