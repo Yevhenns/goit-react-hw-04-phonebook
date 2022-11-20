@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import css from './Form.module.css';
 
-export const Form = () => {
+export const Form = ({ addNewContact }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -15,7 +15,9 @@ export const Form = () => {
     setNumber(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = e => {
+    e.preventDefault();
+    addNewContact(name, number);
     setName('');
     setNumber('');
   };
