@@ -16,27 +16,39 @@ export const App = () => {
   const [filterData, setFilterData] = useState('');
 
   const deleteContact = id => {
-    setContacts(contacts.filter(contact => contact.id !== id),
-    );
-  }
+    setContacts(contacts.filter(contact => contact.id !== id));
+  };
+
   const formSubmitHandler = (name, number) => {
     const newContact = {
       id: nanoid(),
       name,
       number,
-    }
-    setContacts([newContact, ...contacts])
-  }
+    };
+
+    const addedContact = contacts.some(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+    addedContact
+      ? alert(`${name} is already in contacts`)
+      : setContacts([newContact, ...contacts]);
+  };
+
+  const filterHandler = e => {
+    setFilterData(e.target.value);
+  };
+
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filterData.toLowerCase())
+  );
+
   return (
     <div className={css.container}>
       <h1>Phonebook</h1>
       <Form onSubmit={formSubmitHandler} />
       <h2>Contacts</h2>
-      {/* <Filter onChange={filterHandler} value={filterData} />
-
-      <Contacts contacts={filteredNames()} deleteContact={deleteContact} /> */}
-      <Contacts contacts={contacts} deleteContact={deleteContact} />
-
+      <Filter onChange={filterHandler} value={filterData} />
+      <Contacts contacts={filteredContacts} deleteContact={deleteContact} />
     </div>
   );
 };
